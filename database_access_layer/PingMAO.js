@@ -7,8 +7,16 @@ var PingMAO = function(collection) {
 
 PingMAO.prototype = Object.create(MeasurementMAO.prototype);
 
-Ping.prototype.updateTimestampAndResult = function(_id, timestamp, result) {
-  this.collection.update({'_id':_id}, {'timestamp' : timestamp, 'result' : result} ,function(err, result){
+PingMAO.prototype.updateTimestampAndResultBy_id = function(measurement, timestamp, result) {
+  this.collection.update({'_id': measurement._id}, { $set : {'timestamp' : timestamp, 'result' : result}} ,function(err, result){
+    if(err) {
+      throw err;
+    }
+  })
+}
+
+PingMAO.prototype.updateTimestampAndResultById = function(measurement, timestamp, result) {
+  this.collection.update({'id': measurement.id}, { $set : {'timestamp' : timestamp, 'result' : result}} ,function(err, result){
     if(err) {
       throw err;
     }

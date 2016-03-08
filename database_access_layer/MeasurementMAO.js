@@ -4,8 +4,8 @@ var MeasurementMAO = function(collection) {
   this.collection = collection;
 }
 
-MeasurementMAO.prototype.findById = function(Measurement, callback) {
-  this.collection.find({ 'id' : Measurement.id }).limit(1).next(function(err, res){
+MeasurementMAO.prototype.findById = function(measurement, callback) {
+  this.collection.find({ 'id' : measurement.id }).limit(1).next(function(err, res){
     if(err) {
        throw err;
     }
@@ -15,22 +15,28 @@ MeasurementMAO.prototype.findById = function(Measurement, callback) {
   })
 }
 
-MeasurementMAO.prototype.upsertJson = function(json) {
-  this.collection.updateOne({'id': json.id}, json, {'upsert': true }, function(err){
-     if(err)
-       callback(err);
-   });
+MeasurementMAO.prototype.upsertJson = function(json, callback) {
+  this.collection.updateOne({'id': json.id}, json, {'upsert': true }, callback);
 }
 
 MeasurementMAO.prototype.insertJson = function(json) {
-  this.collection.insert(json, function(res, err){
-    if(err)
+  this.collection.insert(json, function(err, res){
+    if(err){
       throw err;
-  })
+    }
+  });
 }
 
-MeasurementMAO.prototype.updateTimestamp = function(_id, timestamp){
-  this.collection.update({'_id':_id}, {'timestamp' : timestamp}, function(err, res){
+MeasurementMAO.prototype.updateTimestampBy_id = function(measurement, timestamp){
+  this.collection.update({'_id': measurement._id}, { $set : {'timestamp' : timestamp}}, function(err, res){
+    if(err) {
+      throw err;
+    }
+  });
+}
+
+MeasurementMAO.prototype.updateTimestampById = function(measurement, timestamp){
+  this.collection.update({'id':measurement.id}, { $set : {'timestamp' : timestamp}}, function(err, res){
     if(err) {
       throw err;
     }

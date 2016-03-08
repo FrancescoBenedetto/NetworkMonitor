@@ -12,8 +12,11 @@ Ping.prototype.equalResults = function(toCompareResult) {
 }
 
 Ping.nowUnreachable = function(r1, r2) {
-  if(r1.result!=error && r2.result=='error') {
+  if(r1!='error' && r2=='error') {
     return true;
   }
+  else {
+    return false;
+  }
 }
-module.exports = Measurement;
+module.exports = Ping;

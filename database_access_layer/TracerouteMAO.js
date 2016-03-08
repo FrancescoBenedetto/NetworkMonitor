@@ -7,8 +7,16 @@ var TracerouteMAO = function(collection) {
 
 TracerouteMAO.prototype = Object.create(MeasurementMAO.prototype);
 
-Traceroute.prototype.updateTimestampAndResult = function(_id, timestamp, path) {
-  this.collection.update({'_id':_id}, {'timestamp' : timestamp, 'path' : path} ,function(err, result){
+TracerouteMAO.prototype.updateTimestampAndResultBy_id = function(measurement, timestamp, path) {
+  this.collection.update({'_id': measurement._id}, { $set : {'timestamp' : timestamp, 'path' : path}} ,function(err, result){
+    if(err) {
+      throw err;
+    }
+  })
+}
+
+TracerouteMAO.prototype.updateTimestampAndResultById = function(measurement, timestamp, path) {
+  this.collection.update({'id': measurement.id}, { $set : {'timestamp' : timestamp, 'path' : path}} ,function(err, result){
     if(err) {
       throw err;
     }

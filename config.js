@@ -1,12 +1,12 @@
 var dbConfig = function() {
 
-  var conf = {"host" : "localhost", "port" : "27017", "databases" : ["Ripe_Atlas"] };
+  var production_conf = {"host" : "localhost", "port" : "27017", "databases" : ["Ripe_Atlas"] };
 
-  var collections = {
-    ping : { most_recent : { name : 'most_recent_pings', index : 'id'},
+  var production_collections = {
+    ping : { most_recent_measurement : { name : 'most_recent_pings', index : 'id'},
             couples      : {name : 'ping_couples'}
           },
-    traceroute : { most_recent : { name : 'most_recent_traceroutes', index : 'id'},
+    traceroute : { most_recent_measurement : { name : 'most_recent_traceroutes', index : 'id'},
                   couples        :  {name : 'traceroute_couples'}
             },
     provider : { name : 'providers', indexes : { first : 'ipstart', second : 'ipend' }
@@ -15,7 +15,18 @@ var dbConfig = function() {
 
   };
 
-  return { conf : conf, collections : collections};
+  var test_conf = {"host" : "localhost", "port" : "27017", "databases" : ["Ripe_Atlas_Test"]};
+
+  var test_collections = {
+                measurement : {
+                               most_recent_measurement : { name : 'measurements', index : 'id' },
+                               couples : { name : 'couples'}
+                            }
+              };
+
+  return { production : {conf : production_conf, collections : production_collections},
+           test : {conf : test_conf, collections : test_collections}
+              };
 
 
 }
@@ -34,6 +45,6 @@ var serverConfig = function() {
   }
 }
 
-module.exports = dbConfig;
-module.exports = socketConfig;
-module.exports = serverConfig;
+module.exports.dbConfig = dbConfig;
+module.exports.socketConfig = socketConfig;
+module.exports.serverConfig = serverConfig;

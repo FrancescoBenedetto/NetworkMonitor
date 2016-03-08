@@ -1,4 +1,4 @@
-var ip_converter = require('../utils/ip_converter.js');
+var ip_converter = require('../utils/ip_converter');
 var _ = require('underscore');
 
 
@@ -12,8 +12,7 @@ ProviderMAO.prototype.findByIp = function(ip_address, callback) {
     if(err)
       throw err;
     else {
-      if(res!=null)
-        callback(res);
+        callback(res.provider);
     }
   });
 }

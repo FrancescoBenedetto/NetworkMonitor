@@ -1,9 +1,9 @@
 var socket_client = require("socket.io-client");
 var ids = require('./ids.js').getIds();
 
-var AtlasConnection = function(atlas_result_callback) {
+var AtlasConnection = function() {
   this.socket = socket_client("http://atlas-stream.ripe.net:80", { path : "/stream/socket.io"});
-  this.setEvents(atlas_result_callback);
+  this.setEvents();
 }
 
 AtlasConnection.prototype.getConnection = function() {
@@ -22,16 +22,19 @@ AtlasConnection.prototype.unsubscribeToChannels() {
   })
 }
 
-AtlasConnection.prototype.setEvents = function(callback) {
+AtlasConnection.prototype.setEventReciever = function(reciever) {
+  this.socket.on('atlas_result', function(result) {
+    reciever(result);
+  });
+
+}
+
+AtlasConnection.prototype.setEvents = function() {
 
   this.socket.on('connect', function(){
     console.log('connected at '+ new Date(Date.now())+ '');
     this.subscribeToChannels();
   })
-
-  this.socket.on('atlas_result', function(result) {
-    callback(result);
-  });
 
   this.socket.on('atlas_error', function(error){
     console.log(error);

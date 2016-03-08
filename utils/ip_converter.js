@@ -1,11 +1,11 @@
 
 function inet_aton(address) {
-  splitted_address = address.split('.');
-  integer_ip = ( 16777216 * parseInt(splitted_address[0]) )
-             + (    65536 * parseInt(splitted_address[1]) )
-             + (      256 * parseInt(splitted_address[2]) )
-              +             parseInt(splitted_address[3]);
-   return integer_ip;
+                  splitted_address = address.split('.');
+                  integer_ip = ( 16777216 * parseInt(splitted_address[0]) )
+                             + (    65536 * parseInt(splitted_address[1]) )
+                             + (      256 * parseInt(splitted_address[2]) )
+                              +             parseInt(splitted_address[3]);
+                   return integer_ip;
 }
 
 function inet_ntoa(ipnum, callback) {
@@ -16,13 +16,6 @@ function inet_ntoa(ipnum, callback) {
    callback(o1+"."+o2+"."+o3+"."+o4);
 }
 
-/*
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-  console.log(inet_aton('174.36.207.186'));
-  console.log(inet_ntoa('2921648058'))
-});
-*/
 
-module.exports = inet_aton;
-module.exports = inet_ntoa;
+module.exports.inet_aton = inet_aton;
+module.exports.inet_ntoa = inet_ntoa;
