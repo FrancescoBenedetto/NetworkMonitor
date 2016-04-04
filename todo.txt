@@ -1,3 +1,12 @@
 1) inserire commenti esplicativi nei moduli (soprattutto nei filtri)
-2) coppie in redis (?)
-3) twitter
+2) coppie in redis (?) -> tanto hanno un time to live
+3) caricamento provider in redis?
+3) aggiungere twitter
+4) Maxmind ipv6
+
+---Efficientamento
+LookupFilter
+1) buffer per le insert nel LookupFilter
+CompareFilter
+1)prova ricerca e update per id (non _id)
+2)buffer per le coppie

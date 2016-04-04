@@ -36,16 +36,18 @@ DbConnection.prototype.setCollections = function(db) {
   var collections = {};
   collections.traceroute = {};
   collections.ping = {};
+  collections.provider = {};
   //set traceroutes' collections
-  collections.traceroute.most_recent_measurement_measurement=db.collection(this.collections_conf.traceroute.most_recent_measurement.name);
-  collections.traceroute.couples = db.collection(this.collections_conf.ping.most_recent_measurement.name);
+  collections.traceroute.most_recent_measurement=db.collection(this.collections_conf.traceroute.most_recent_measurement.name);
+  collections.traceroute.couples = db.collection(this.collections_conf.traceroute.couples.name);
   //set pings' collections
-  collections.ping.most_recent_measurement_measurement=db.collection(this.collections_conf.traceroute.couples.name);
+  collections.ping.most_recent_measurement=db.collection(this.collections_conf.ping.most_recent_measurement.name);
   collections.ping.couples = db.collection(this.collections_conf.ping.couples.name);
   //set collecction's index
-  collections.traceroute.most_recent_measurement_measurement.createIndex({'id' : 1});
-  collections.ping.most_recent_measurement_measurement.createIndex({'id' : 1});
-
+  collections.traceroute.most_recent_measurement.createIndex({'id' : 1});
+  collections.ping.most_recent_measurement.createIndex({'id' : 1});
+  collections.provider = db.collection('providers');
+  collections.provider.createIndex({'ipstart': 1, 'ipend':1});
   return collections;
 }
 

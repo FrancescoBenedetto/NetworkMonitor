@@ -10,7 +10,7 @@ Lookup.prototype.execute = function(measurement, next) {
       self.dao.insertJson(measurement);
     }
     else {
-      next({ incoming : measurement, found : res});
+      next(null, { incoming : measurement, found : res});
     }
   });
 }

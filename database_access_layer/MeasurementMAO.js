@@ -15,6 +15,17 @@ MeasurementMAO.prototype.findById = function(measurement, callback) {
   })
 }
 
+MeasurementMAO.prototype.findBy_id = function(measurement, callback) {
+  this.collection.find({ 'id' : measurement._id }).limit(1).next(function(err, res){
+    if(err) {
+       throw err;
+    }
+    else {
+      callback(res);
+    }
+  })
+}
+
 MeasurementMAO.prototype.upsertJson = function(json, callback) {
   this.collection.updateOne({'id': json.id}, json, {'upsert': true }, callback);
 }

@@ -1,10 +1,20 @@
-var DB = require('../database_access_layer/DbConnection');
+var DbConnection = require('../database_access_layer/DbConnection');
 
-function prova() {
-  var db = new DB('TEST');
-  db.connect(function(datab){
-    db.setTestCollections(datab);
+describe('Test the mongo database connection', function(){
+  var db;
+
+  before(function(done){
+    connection = new DbConnection('TEST');
   })
-}
 
-prova();
+  after(function(done){
+    //collection.remove({});
+    db.close();
+    done();
+  });
+
+  it('should connect to database', function(done){
+
+  })
+
+})

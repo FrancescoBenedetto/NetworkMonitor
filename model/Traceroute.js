@@ -40,6 +40,7 @@ Traceroute.getIndictedNodes = function(path1, path2) {
     if(node1!=node2) {
       indictedNodes.push(node1);
       indictedNodes.push(node2);
+      break;
     }
   }
 

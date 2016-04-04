@@ -10,7 +10,30 @@ var CompareTracerouteFilter = function(mdao, cdao, serverSocket) {
   this.couple = new TracerouteCouple();
 }
 
-CompareTracerouteFilter.prototype.execute = function(traceroutes, next) {
+CompareTracerouteFilter.prototype.executeLight = function(traceroutes, next){
+  var nodesNumber, incoming, found, nodes, ips, couple;
+  incoming = traceroutes.incoming;
+  found = traceroutes.found;
+  nodes = TracerouteUtils.getIndictedNodes(incoming.path, found.path);
+  if(nodes!=null && nodes.length>0 && incoming.timestamp>found.timestamp) {
+    //update most recent
+    this.mdao.updateTimestampAndResultBy_id(found, incoming.timestamp, incoming.path);
+    //insert the new couple
+    couple = this.couple.buildTracerouteCouple(incoming, found);
+    this.cdao.insert(couple);
+    //send alert
+    this.serverSocket.sendBroadcastAlert(incoming.timestamp);
+    //send ips to next filter
+    ips = _.filter(nodes, function(node) { return (/*node!='*' && */ node!='error'); });
+    if(ips.length>1) { //filtra le coppie ip-error
+      next(null, {af : incoming.af ,ips : ips});
+    }
+  }
+
+  }
+
+
+CompareTracerouteFilter.prototype.executeHeavy = function(traceroutes, next) {
   var nodesNumber, incoming, found, nodes, ips, newer_timestamp;
   incoming = traceroutes.incoming;
   found = traceroutes.found;
@@ -34,11 +57,11 @@ CompareTracerouteFilter.prototype.execute = function(traceroutes, next) {
         this.cdao.insert(this.couple.buildTracerouteCouple(found, incoming));
         this.serverSocket.sendBroadcastAlert(incoming.timestamp);
       }
-      ips = _.filter(nodesNumber, function(node) {
-        return node!='*' && node!='error';
+      ips = _.filter(nodes, function(node) {
+        return (node!='*' || node!='error');
       });
-      if(ips>0) {
-        next(ips);
+      if(ips.length>0) {
+        next(null, ips);
       }
     }
   }

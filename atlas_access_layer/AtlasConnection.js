@@ -10,15 +10,17 @@ AtlasConnection.prototype.getConnection = function() {
   return this.socket;
 }
 
-AtlasConnection.prototype.subscribeToChannels() {
+AtlasConnection.prototype.subscribeToChannels = function() {
+  var self = this;
   ids.forEach(function(id){
-    this.socket.emit('atlas_subscribe', { stream_type: "result", msm: id })
+    self.socket.emit('atlas_subscribe', { stream_type: "result", msm: id });
   });
 }
 
-AtlasConnection.prototype.unsubscribeToChannels() {
+AtlasConnection.prototype.unsubscribeToChannels = function() {
+  var self = this;
   ids.forEach(function(id){
-    this.socket.emit('atlas_unsubscribe', { stream_type: "result", msm: id })
+    self.socket.emit('atlas_unsubscribe', { stream_type: "result", msm: id });
   })
 }
 
@@ -30,10 +32,10 @@ AtlasConnection.prototype.setEventReciever = function(reciever) {
 }
 
 AtlasConnection.prototype.setEvents = function() {
-
+  var self = this;
   this.socket.on('connect', function(){
     console.log('connected at '+ new Date(Date.now())+ '');
-    this.subscribeToChannels();
+    self.subscribeToChannels();
   })
 
   this.socket.on('atlas_error', function(error){
