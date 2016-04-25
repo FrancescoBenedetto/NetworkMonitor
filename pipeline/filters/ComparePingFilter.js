@@ -10,6 +10,25 @@ var ComparePingFilter = function(mdao, cdao, serverSocket) {
 }
 
 
+ComparePingFilter.prototype.executeError = function(pings, next){
+  var incoming = pings.incoming,
+      found = pings.found;
+
+    if(incoming.timestamp > found.timestamp){
+        if(PingUtils.oneErrored(found.result, incoming.result)){
+            if(found.result != 'error' || incoming.result != 'error'){ //update db just if result is different (one error, one not)
+                //update ping
+                this.mdao.updateTimestampAndResultBy_id(found, incoming.timestamp, incoming.result);
+                //insert couple
+                //this.cdao.insert(this.coupleUtils.buildPingCouple(incoming, found));
+                //alert client
+                //this.serverSocket.sendBroadcastAlert(incoming.timestamp);
+            }
+            next(null, pings);
+        }
+    }
+}
+
 ComparePingFilter.prototype.executeOnChanges = function(pings, next){
   var incoming = pings.incoming
       , found = pings.found;

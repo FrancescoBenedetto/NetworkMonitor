@@ -31,6 +31,7 @@ ProviderPsqlDAO.prototype.executeQuery = function(sql, values, handler, callback
         client.query(sql, values, function(err, result){
             done();
             if(err){
+                console.log(values);
                 throw err;
             }
             handler(result, callback);

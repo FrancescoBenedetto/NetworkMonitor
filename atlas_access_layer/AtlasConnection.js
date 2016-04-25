@@ -10,12 +10,35 @@ AtlasConnection.prototype.getConnection = function() {
   return this.socket;
 }
 
+//probe events
+AtlasConnection.prototype.subscribe_to_prb = function(prb_id, start_time) {
+  this.socket.emit('atlas_subscribe', {
+    stream_type : 'probestatus',
+    //startTime : start_time,
+    prb : prb_id
+  });
+};
+
+AtlasConnection.prototype.unsubscribe_to_prb = function(prb_id) {
+  this.socket.emit('atlas_unsubscribe', {
+    stream_type : 'probestatus',
+    prb : prb_id
+  });
+};
+
+AtlasConnection.prototype.setProbeStatusReciever = function(reciever) {
+    this.socket.on('atlas_probestatus', function(status){
+        reciever(status);
+    });
+};
+
+//measurements events
 AtlasConnection.prototype.subscribeToChannels = function() {
   var self = this;
   ids.forEach(function(id){
     self.socket.emit('atlas_subscribe', { stream_type: "result", msm: id });
   });
-}
+};
 
 AtlasConnection.prototype.unsubscribeToChannels = function() {
   var self = this;
@@ -39,7 +62,7 @@ AtlasConnection.prototype.setEvents = function() {
   })
 
   this.socket.on('atlas_error', function(error){
-    console.log(error);
+    console.log('Atlas Error: '+error);
   });
 
   this.socket.on('disconnect', function(){
@@ -47,7 +70,7 @@ AtlasConnection.prototype.setEvents = function() {
   });
 
   this.socket.on('error', function(error){
-    console.log(error);
+    console.log('Socket Error: '+error);
   });
 }
 

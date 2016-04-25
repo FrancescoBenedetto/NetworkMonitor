@@ -1,0 +1,165 @@
+div.measurement_alerts {
+    margin-left: 5%;
+    margin-top: 5%;
+    width:720px;
+    float:left;
+}
+
+div.tweets_container {
+    float:right;
+    margin-right:2%;
+    margin-top:5%;
+    width : 400px;
+}
+
+text.title {
+    color:#00aced;
+    margin-top: 20%;
+    font-size: 30px;
+}
+
+div.box
+{
+    font-size:15px;
+    /*padding:1px 0;
+    */
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    height:300px;
+    overflow-y:scroll;
+    word-wrap: break-word;
+}
+
+ol.tweets {
+    padding:0;
+    list-style-type:none;
+}
+
+li {
+    margin:0 0 20px 0;
+}
+
+div.box div.header, div.content, div.pic {
+    overflow:hidden;
+}
+
+div.pic {
+    margin-left: 1%;
+    float:left;
+}
+
+img.pic {
+    height:40px;
+    width:40px;
+    margin-right: 10%;
+    border-radius:50%;
+}
+
+text.user {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+text.time {
+    font-size: 10px;
+    color:   #666666;
+}
+
+text + text {
+    margin-left: 3%;
+}
+
+div.box div.content {
+    margin-top: 1%;
+}
+
+text.tweet {
+    font-size: 13px;
+}
+
+hr.separator
+{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-left: 12%;
+    margin-right: 0.5%;
+}
+
+g.timeline-chart {
+}
+
+g.tick text {
+    font-size : 11px;
+}
+
+g.x_axis line, path {
+    fill : none;
+    stroke: #000;
+}
+
+.brush .extent {
+    stroke: #000;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
+
+
+.d3-tip {
+    background: rgba(0, 0, 0, 0.8) none repeat scroll 0 0;
+    border-radius: 2px;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1;
+    padding: 4px;
+    pointer-events: none;
+}
+
+.d3-tip text {
+    font-size: 10px;
+}
+
+.d3-tip::after {
+    box-sizing: content-box;
+    color: rgba(0, 0, 0, 0.8);
+    display: inline;
+    font-size: 10px;
+    line-height: 1;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+
+.d3-tip.n::after {
+    content: "▼";
+    left: 0;
+    margin: -1px 0 0;
+    text-align: center;
+    top: 100%;
+}
+
+.d3-tip.e::after {
+    content: "◀";
+    left: -8px;
+    margin: -4px 0 0;
+    top: 50%;
+}
+
+.d3-tip.s::after {
+    content: "▲";
+    left: 0;
+    margin: 0 0 1px;
+    text-align: center;
+    top: -8px;
+}
+
+.d3-tip.w::after {
+    content: "▶";
+    left: 100%;
+    margin: -4px 0 0 -1px;
+    top: 50%;
+}
+
+
+
+

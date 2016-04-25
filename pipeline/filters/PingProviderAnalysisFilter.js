@@ -27,7 +27,7 @@ ProviderCounterHelper.prototype.insert = function(el) {
     this.array.push(this.creator(el));
     this.i++;
     if(this.i==300){
-        console.log('inserting 300 providers');
+        console.log('inserting 300 couples providers');
         this.collection.insertMany(this.array, function(err, res){
             if(err){
                 throw err;

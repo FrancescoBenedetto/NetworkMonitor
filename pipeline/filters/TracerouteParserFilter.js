@@ -2,6 +2,8 @@ var MeasurementParserFilter = require('./MeasurementParserFilter');
 
 var TracerouteParserFilter = function() {}
 
+TracerouteParserFilter.prototype = Object.create(MeasurementParserFilter.prototype);
+
 TracerouteParserFilter.prototype.parse = function(atlas_traceroute, callback) {
   var path = this.parsePath(atlas_traceroute.result);
     callback(atlas_traceroute.endtime, atlas_traceroute.from, atlas_traceroute.dst_addr, path);
@@ -20,7 +22,6 @@ TracerouteParserFilter.prototype.execute = function(atlas_traceroute, next) {
           );
 }
 
-TracerouteParserFilter.prototype = Object.create(MeasurementParserFilter.prototype);
 
 TracerouteParserFilter.prototype.parsePath = function(atlas_path) {
   var path = [];

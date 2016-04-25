@@ -1,0 +1,34 @@
+----INGLESE----
+
+outage
+offline
+problem
+issue
+(service) down
+not working
+(service) fail
+interruption
+trouble
+breakdown
+disconnection
+no connection
+no|without internet (access)
+
+----SPAGNOLO----
+
+problema
+apagòn
+corte (de senal)
+no servicio
+interrupciòn (de servicio, de senal, de cable, de internet)
+fallo en lo servicio
+caer de linea
+no|sin internet
+
+----FRANCESE----
+
+interruption (de lignes, de service)
+probleme (de ligne)
+coupure (sur la ligne)
+injoignable
+sans internet

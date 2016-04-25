@@ -2,7 +2,8 @@ require('rootpath')();
 var DbConnection = require('database_access_layer/DbConnection');
 var TracerouteMAO = require('database_access_layer/TracerouteMAO');
 var MeasurementCouplesMAO = require('database_access_layer/MeasurementCouplesMAO');
-var ProviderMAO = require('database_access_layer/ProviderMAO');
+var ProviderMAO = require('database_access_layer/ProviderPsqlDAO');
+var psql = require('database_access_layer/PostgresqlDbConnection')
 var FakeServerSocket = require('test/pipeline_test/FakeServerSocket');
 var TraceroutePipeline = require('pipeline/TraceroutePipeline');
 var assert = require('assert');
@@ -23,7 +24,8 @@ describe('Traceroute Pipeline Test', function(){
                               "93.48.249.105",
                               "168.243.14.110",
                               "10.131.134.26"
-                             ]
+                             ],
+        'af': 4
                   };
 
     m2 = { "id" : "168.243.14.106_94.186.178.253",
@@ -34,7 +36,8 @@ describe('Traceroute Pipeline Test', function(){
                 "93.48.249.105",
                 "168.243.14.110",
                 "10.131.134.26"
-                    ]
+                    ],
+        af : 4
                   };
 
                   m3 = { "id" : "168.243.14.106_94.186.178.253",
@@ -45,7 +48,8 @@ describe('Traceroute Pipeline Test', function(){
                               "93.48.249.105",
                               "168.243.14.110",
                               "11.131.134.26"
-                                  ]
+                                  ],
+                      af : 4
                                 };
 
 
@@ -58,7 +62,7 @@ describe('Traceroute Pipeline Test', function(){
       measurement_collections = dbc.setTestCollections(db);
       couples_collection = measurement_collections.couples;
       measurement_collection = measurement_collections.measurement;
-      pmao = new ProviderMAO(providers_collection);
+      pmao = new ProviderMAO(new psql());
       mmao = new TracerouteMAO(measurement_collection);
       cmao = new MeasurementCouplesMAO(couples_collection);
       serverSocket = new FakeServerSocket();

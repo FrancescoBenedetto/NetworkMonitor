@@ -25,12 +25,32 @@ ProviderLookUpFilter.prototype.execute = function(af2ips, next) {
   }
 }
 
+ProviderLookUpFilter.prototype.executeCouplePing = function(af2ips, next){
+  var ips, self, af;
+  af = af2ips.af;
+  ips = af2ips.ips;
+  if(ips.length>1){
+    ips  = _.filter(ips, function(ip){return ip!='*' && ip!='' && ip!=null });
+    if(af==4){
+      this.coupleHelper(ips, this.dao.findISPbyIpv4, this.dao.findCoupleISPbyIpv4, function(res){
+        next(null, res);
+      });
+    }
+    else {
+      this.coupleHelper(ips, this.dao.findISPbyIpv6, this.dao.findCoupleISPbyIpv6, function(res){
+        next(null, res);
+      });
+    }
+  }
+}
+
+
 ProviderLookUpFilter.prototype.executeCouple = function(af2ips, next){
   var ips, self, af;
   af = af2ips.af;
   ips = af2ips.ips;
   if(ips.length>1){
-    ips  = _.filter(ips, function(ip){return ip!='*'});
+    ips  = _.filter(ips, function(ip){return ip!='*' && ip!='' && ip!=null });
     if(af==4){
       this.coupleHelper(ips, this.dao.findISPbyIpv4, this.dao.findCoupleISPbyIpv4, function(res){
         next(null, res);
@@ -42,12 +62,12 @@ ProviderLookUpFilter.prototype.executeCouple = function(af2ips, next){
      });
     }
   }
-}
+};
 
 ProviderLookUpFilter.prototype.coupleHelper = function(ips, singleFinder, coupleFinder, resHandler) {
   if(ips.length==1){
     singleFinder.call(this.dao, ips[0], function(res){
-      resHandler(['*', res]);
+      resHandler(['Unknown', res]);
     });
   }
   else if(ips.length==2){

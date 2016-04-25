@@ -39,7 +39,8 @@ var dbConfig = function() {
 var socketConfig = function() {
   return {
     alert : 'alert',
-    provider : 'provider'
+    provider : 'provider',
+      errors : 'errors'
   };
 }
 
@@ -56,11 +57,9 @@ var twitterConfig = function() {
   access_token: '3078193287-TKT6n2sG1bmRIWx1NbDJ428NAC9EW9R54HcUsGV',
   access_token_secret: 'lVJfDQfoQ9aeryO0U84XoYG3caIoFrA9LeexEqNPPPGx9'
 };
-
-  var tracked_words = ['outage', 'network issue', 'network problem', 'service down'];
-
-  return {connection_parameters: connection_parameters, tracked_words : tracked_words};
-}
+    
+  return connection_parameters;
+};
 
 module.exports.dbConfig = dbConfig;
 module.exports.socketConfig = socketConfig;
