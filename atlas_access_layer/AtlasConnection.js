@@ -3,8 +3,8 @@ var ids = require('./ids.js').getIds();
 
 var AtlasConnection = function() {
   this.socket = socket_client("http://atlas-stream.ripe.net:80", { path : "/stream/socket.io"});
-  //this.setEvents();
-    this.setHistoricalEvents();
+  this.setEvents();
+    //this.setHistoricalEvents();
 }
 
 AtlasConnection.prototype.getConnection = function() {
