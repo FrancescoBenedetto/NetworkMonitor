@@ -18,7 +18,41 @@ var PingProviderFilter = function(dao){
             next(null, action2ping);
         }
     };
+
+    this.executeComcast = function(ping, next){
+        var ips = this.getIps(action2ping.ping);
+        if(action2ping.action=='inserted'){
+            this.lookUpProvider(ips, action2ping.ping.af, function(providers){
+                action2ping.ping.providers = providers;
+                if(providers.indexOf('Comcast Cable Communications, Inc.')!=-1){
+                    console.log(action2ping);
+                    next(null, action2ping);
+                }
+            });
+        }
+        else {
+            next(null, action2ping);
+        }
+    };
     
+    this.executeSingle = function(ping, next){
+        var ips = [];
+        if(ping.src!=''){
+            ips.push(ping.src);
+        }
+        if(ping.dst!=''){
+            ips.push(ping.dst);
+        }
+        if(ips.length>0){
+            this.lookUpProvider(ips, ping.af, function(providers){
+                if(providers.indexOf('Comcast Cable Communications, Inc.')!=-1){
+                    ping.providers = providers;
+                    next(null, ping);
+                }
+            });
+        }
+    };
+
     this.lookUpProvider = function(ips, af, callback){
         if(ips.length==0){
             callback(['Unknown', 'Unknown']);

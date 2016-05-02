@@ -16,7 +16,7 @@ var dbConn = new DbConnection('PRODUCTION');
 //Atlas (connects automatically)
 var atlasConn = new AtlasConnection();
 //Twitter
-var twitter = new TwitterConnection();
+//var twitter = new TwitterConnection();
 //clients
 var serverSocket = new ClientConnection();
 
@@ -74,7 +74,7 @@ dbConn.connect(function(db){
   });
 
     var twitter_text = require('twitter-text');
-
+/*
     var tweets = [];
     var t_n = 0;
     var tweetReciever = function(tweet) {
@@ -83,13 +83,17 @@ dbConn.connect(function(db){
         tweet.text = twitter_text.autoLink(tweet.text, { usernameIncludeSymbol: true }, tweet.entities);
 
        if(t_n==50){
-           tweets.pop();
-           tweets.unshift(tweet);
+          // tweets.pop();
+           //tweets.unshift(tweet);
+           t_n = 0;
+           serverSocket.sendBroadcastTweets(tweets);
+         //  tweets= [];
        }
        else {
            tweets.unshift(tweet);
+           serverSocket.sendBroadcastTweets(tweets); //for test
+           t_n++;
        }
-       serverSocket.sendBroadcastTweets(tweets);
     };
 
     setInterval(function(){
@@ -100,7 +104,7 @@ dbConn.connect(function(db){
             twitter.setReciever(tweetReciever);
         }
     }, Math.pow(2, twitter.consecutiveErrors) * 10 * 60 * 1000);
-
+*/
 
 
     setTimeout(function(){

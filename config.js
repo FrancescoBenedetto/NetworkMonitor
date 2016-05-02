@@ -3,7 +3,7 @@ var dbConfig = function() {
   var production_conf = {
                         "host" : "localhost",
                         "port" : "27017",
-                        "databases" : ["Ripe_Atlas"]
+                        "databases" : ["Ripe_Atlas_Historical"]
                       };
 
   var production_collections = {

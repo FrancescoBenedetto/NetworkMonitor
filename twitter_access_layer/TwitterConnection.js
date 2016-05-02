@@ -12,7 +12,7 @@ var TwitterConnection = function(){
   );
   this.stream = null;
   this.consecutiveErrors = 0;
-}
+};
 
 TwitterConnection.prototype.setTrackwords = function(trackwords){
   this.stream = this.connection.stream('statuses/filter', { track : trackwords });
@@ -74,6 +74,10 @@ TwitterConnection.prototype.setAlertEvents = function(){
     this.onconnect();
     this.ondisconnect();
     this.onerror();
+};
+
+TwitterConnection.prototype.searchHistorical = function(startTime, endTime, q, callback){ //q = comcast outage OR comcast issue..
+    this.connection.get('search/tweets', {q : q + ' since:' +startTime+' until:'+endTime}, callback);
 };
 
 /*

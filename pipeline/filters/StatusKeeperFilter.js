@@ -10,7 +10,6 @@ var StatusKeeperFilter = function(k, atlasSocket) {
     this.k = k;
     this.observation_status = [];
     this.tracking_status = [];
-    this.notWorking_status = [];
     this.tracked_probes = [];
     this.trash = [];
     this.socket = atlasSocket;
@@ -78,36 +77,24 @@ var StatusKeeperFilter = function(k, atlasSocket) {
     //this.setSocketEvent();
 
 
-    this.updateStatus = function(pings) {
+    this.updateStatus = function(pings, next) {
         var actual = pings.incoming,
             old = pings.found;
 
         //(ok, err)
         if(PingUtils.nowUnreachable(old.result, actual.result)){
             this.observation_status.push(createObservationStatusObj(actual));
-            /* console.log('timestamp: ' +actual.timestamp + ' id: '+ actual.prb_id);
-            if(!(_.contains(this.tracked_probes, actual.prb_id))){
-                this.tracked_probes.push(actual.prb_id);
-                this.subscribe_to_prb(actual.prb_id, actual.timestamp);
-            }*/
         }
-            //(err, ok)
+        //(err, ok)
         else if(PingUtils.nowReachable(old.result, actual.result)){
             var to_trash1 = removePing(this.observation_status, actual);
-            var to_trash2 = removePing(this.tracking_status, actual);
             //for analysis
             if(to_trash1 != -1){
                 to_trash1 = to_trash1[0];
-                to_trash1.from_status = 'obs';
-                this.trash.push(to_trash1);
+                to_trash.trash_time = Date.now();
+                //this.trash.push(to_trash1);
+                next(null, to_trash1);
             }
-            
-            if(to_trash2 != -1){
-                to_trash2 = to_trash2[0];
-                to_trash2.from_status = 'trck';
-                this.trash.push(to_trash2);
-            }
-          //  unsubscribe_to_prb(actual.prb_id);
         }
         //(err, err)
         else {
@@ -115,17 +102,8 @@ var StatusKeeperFilter = function(k, atlasSocket) {
             //isn't in tracking status yet
             if(observedPing != undefined){
                 observedPing.k = observedPing.k + 1;
-                //it's time to insert it in tracking
-                if(observedPing.k==this.k){
-                    removePing(this.observation_status, old);
-                    this.tracking_status.push(observedPing);
-                }
-                //just update ping's k
-                else{
                     var index = _.findIndex(this.observation_status, function(el) {return el.id==observedPing.id});
                     this.observation_status[index] = observedPing;
-                }
-
             }
 
         }

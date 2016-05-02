@@ -12,6 +12,7 @@ var PingTrackedFilter = function(serverSocket){
     this.time_changed = false;
 
     this.execute = function(action2ping, next) {
+        //console.log(action2ping);
         var alert, removed, res;
         if(action2ping.action == 'removed') {
           removed = this.remove(action2ping.ping);
@@ -34,6 +35,62 @@ var PingTrackedFilter = function(serverSocket){
             this.serverSocket.sendBroadcastErrors(res);
         }
         //console.log(res);
+        next(null, action2ping);
+    };
+    
+    this.executeComcast = function(action2ping, next) {
+        var alert, removed, res;
+        if(action2ping.action == 'removed') {
+            removed = this.remove(action2ping.ping);
+            if(removed!=-1){
+                this.update_time_onremove(removed);
+                action2ping.ping.providers = removed.words;
+            }
+        }
+        else {
+            action2ping.ping.timestamp = action2ping.ping.timestamp * 1000; //adapt to javascript's date
+            alert = this.build_alert(action2ping.ping);
+            this.tracked_pings.push(alert);
+            this.update_time_oninsert(alert);
+        }
+        if(this.time_changed){
+            res = {times : {max : this.max_time, min : this.min_time} ,pings : this.tracked_pings};
+            this.serverSocket.sendBroadcastErrors(res);
+            this.time_changed = false;
+        }
+        else {
+            res = {times : null, pings : this.tracked_pings};
+            this.serverSocket.sendBroadcastErrors(res);
+        }
+        //console.log(res);
+        next(null, action2ping);
+    };
+    
+    this.executeSingle = function(action2ping, next){
+        var removed, alert;
+        action2ping.ping.timestamp = action2ping.ping.timestamp * 1000; //adapt to javascript's date
+        if(action2ping.action=="removed"){
+            removed = this.remove(action2ping.ping);
+            if(removed!=-1){
+                this.update_time_onremove(removed);
+                action2ping.providers = removed.words;
+            }
+        }
+        else {
+            alert = this.build_alert(action2ping.ping);
+            this.tracked_pings.push(alert);
+            this.update_time_oninsert(alert); 
+        }
+        if(this.time_changed){
+            res = {times : {max : this.max_time, min : this.min_time} ,pings : this.tracked_pings}
+            this.serverSocket.sendBroadcastErrors(res);
+            this.time_changed = false;
+        }
+        else {
+            res = {times : null, pings : this.tracked_pings}
+            this.serverSocket.sendBroadcastErrors(res);
+        }
+        
         next(null, action2ping);
     };
 

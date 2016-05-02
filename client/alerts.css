@@ -1,92 +1,20 @@
-div.measurement_alerts {
-    margin-left: 5%;
+div.measurement_alerts_container {
+    margin-left: 2%;
     margin-top: 5%;
+    float:left;
+}
+
+div.measurement_alerts_container text.title{
+    color:red;
+}
+
+div.measurement_alerts_container div.title {
+}
+
+div.measurement_alerts {
     width:720px;
     float:left;
-}
-
-div.tweets_container {
-    float:right;
-    margin-right:2%;
-    margin-top:5%;
-    width : 400px;
-}
-
-text.title {
-    color:#00aced;
-    margin-top: 20%;
-    font-size: 30px;
-}
-
-div.box
-{
-    font-size:15px;
-    /*padding:1px 0;
-    */
-    border: 5px solid rgba(0, 0, 0, 0.1);
-    height:300px;
-    overflow-y:scroll;
-    word-wrap: break-word;
-}
-
-ol.tweets {
-    padding:0;
-    list-style-type:none;
-}
-
-li {
-    margin:0 0 20px 0;
-}
-
-div.box div.header, div.content, div.pic {
-    overflow:hidden;
-}
-
-div.pic {
-    margin-left: 1%;
-    float:left;
-}
-
-img.pic {
-    height:40px;
-    width:40px;
-    margin-right: 10%;
-    border-radius:50%;
-}
-
-text.user {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-text.time {
-    font-size: 10px;
-    color:   #666666;
-}
-
-text + text {
-    margin-left: 3%;
-}
-
-div.box div.content {
-    margin-top: 1%;
-}
-
-text.tweet {
-    font-size: 13px;
-}
-
-hr.separator
-{
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    margin-left: 12%;
-    margin-right: 0.5%;
-}
-
-g.timeline-chart {
+    border: 2px solid rgba(0, 0, 0, 0.3);
 }
 
 g.tick text {
@@ -159,6 +87,102 @@ g.x_axis line, path {
     margin: -4px 0 0 -1px;
     top: 50%;
 }
+
+
+div.tweets_container {
+    margin-top: 5%;
+    margin-right: 2%;
+    width : 400px;
+    float:right;
+}
+
+div.tweets_container img.title{
+    border-radius:50%;
+}
+
+img.title {
+    width : 40px;
+    height:40px;
+}
+
+text.title {
+    font-size: 30px;
+    margin-left:2%;
+}
+
+div.tweets_container text.title{
+    color:#00aced;
+}
+
+div.box
+{
+    font-size:15px;
+    /*padding:1px 0;
+    */
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    height:400px;
+    overflow-y:scroll;
+    word-wrap: break-word;
+}
+
+ol.tweets {
+    padding:0;
+    list-style-type:none;
+}
+
+li {
+    margin:0 0 20px 0;
+}
+
+div.box div.header, div.content, div.pic {
+    overflow:hidden;
+}
+
+div.pic {
+    margin-left: 1%;
+    float:left;
+}
+
+img.pic {
+    height:40px;
+    width:40px;
+    margin-right: 10%;
+    border-radius:50%;
+}
+
+text.user {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+text.time {
+    font-size: 10px;
+    color:   #666666;
+}
+
+text + text {
+    margin-left: 3%;
+}
+
+div.box div.content {
+    margin-top: 1%;
+}
+
+text.tweet {
+    font-size: 13px;
+}
+
+hr.separator
+{
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-left: 12%;
+    margin-right: 0.5%;
+}
+
+
 
 
 

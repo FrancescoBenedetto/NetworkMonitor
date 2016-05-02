@@ -7,7 +7,13 @@
 </head>
 <body>
 
-<div class="measurement_alerts"></div>
+<div class="measurement_alerts_container">
+ <div class="title">
+     <img class="title" src="./imgs/attention.png">
+     <text class="title">PING ERRORS</text>
+ </div>
+    <div class="measurement_alerts"></div>
+</div>
 
 <script src="underscore.js"></script>
 <script src="socket.io.js"></script>
@@ -20,18 +26,15 @@
 
 
 <div class="tweets_container">
-    <div class="title"><text class="title">TWEETS</text></div>
+    <div class="title">
+        <img class="title" src="./imgs/tweets.jpeg">
+        <text class="title">TWEETS</text>
+    </div>
 <div class="box">
     <ol class="tweets">
     </ol>
 </div>
 </div>
 
-<!--
-<a class="twitter-timeline"
-   href="https://twitter.com/fra__benedetto/likes"
-   data-widget-id="724238574644801536">I Mi piace di @fra__benedetto su Twitter</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
--->
 </body>
 </html>

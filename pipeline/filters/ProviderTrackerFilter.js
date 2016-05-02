@@ -2,12 +2,14 @@
  * Created by francesco on 22/04/16.
  */
 var _ = require('underscore');
+var natural = require('natural');
 
 var keywords = require('../../keywords.js')('english');
 
 var ProviderTrackerFilter = function(){
     this.trackingProviders = [];
     this.keywords = keywords;
+    this.tokenizer = new natural.WordTokenizer();
 
     this.execute = function(action2ping, next){
        // console.log(action2ping);
@@ -93,6 +95,31 @@ var ProviderTrackerFilter = function(){
         return providers.map(function(el){return el.name});
     };
 
+    var toFilterWord = function (word) {
+        var lowerCase = word.toLowerCase();
+        return lowerCase=='inc' || lowerCase=='spa' || lowerCase=='limited' || lowerCase=='ltd';
+    };
+
+    this.cleanProviderNames = function(providerNames){
+        var self = this,
+            words = [],
+            cleaned_names = [],
+            new_provider_name;
+        providerNames.forEach(function(providerName){
+            words = self.tokenizer.tokenize(providerName);
+            new_provider_name = '';
+            words.forEach(function(word){
+                if(word.length>2 && !toFilterWord(word)){
+                    new_provider_name += word + ' ';
+                }
+            });
+            if(new_provider_name!='' && new_provider_name!=' '){
+                cleaned_names.push(new_provider_name.substring(0, new_provider_name.length-1));
+            }
+        });
+        return cleaned_names;
+    };
+
     this.addKeywords = function(providers){
         var words = [],
             self = this;
@@ -131,7 +158,8 @@ var ProviderTrackerFilter = function(){
 
     this.prepareWordsToStream = function() {
         var ordered = this.orderByOccurency();
-        var prov_keyw = this.addKeywords(ordered);
+        var cleaned = this.cleanProviderNames(ordered);
+        var prov_keyw = this.addKeywords(cleaned);
         var count = this.countWords(prov_keyw);
         if(count>400){
             var numberToCut = count - 400;
@@ -145,3 +173,14 @@ var ProviderTrackerFilter = function(){
 };
 
 module.exports = ProviderTrackerFilter;
+
+/*
+var filter = new ProviderTrackerFilter();
+filter.trackingProviders = [
+    {name:'MIX S.r.l Limited', nominations:1},
+    {name : 'Booking.com B.V', nominations:2},
+    {name:'Comcast Cable Communications, Inc.', nominations:1}]
+;
+var res = filter.prepareWordsToStream();
+console.log(res);
+*/
